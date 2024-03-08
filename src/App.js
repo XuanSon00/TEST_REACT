@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Routes, Route, Link, NavLink} from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import 'boxicons/css/boxicons.min.css';
 
-function App() {
+import Home from './pages/Home';
+import Homepage from './data/homepage';
+import LogIn from './pages/LogIn';
+import Register from './pages/Register';
+import Apple from './data/apple';
+import Samsung from './data/samsung';
+import Footer from './components/footer';
+import Phone from './data/phone';
+import Tablet from './data/tablet';
+import Detail from './data/detail';
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <BrowserRouter>
+      <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<LogIn />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/homepage' element={<Homepage />} />
+          <Route path='/apple' element={<Apple />} />
+          <Route path='/samsung' element={<Samsung />} />
+          <Route path='/tablet' element={<Tablet />} />
+          <Route path='/phone' element={<Phone />} />
+          <Route path='/detail' element={<Detail />} />
+          <Route path="/footer" element={<Footer />} />
+        </Routes>
+
+      </BrowserRouter>
     </div>
   );
 }
 
-export default App;
+

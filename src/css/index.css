@@ -1,0 +1,28 @@
+
+.product-box{
+    max-width: 1000px;
+    margin: auto;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.product-items{
+    display: grid;
+    grid-template-columns: auto auto;
+    background-color: #ddd;
+    padding: 12px;
+    column-gap: 20px;
+    row-gap: 20px;
+    }
+
+.product-item img{
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+.product-item{
+    background-color: #fff;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+}

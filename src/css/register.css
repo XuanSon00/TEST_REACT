@@ -1,0 +1,79 @@
+
+
+.form{
+    padding :50px;
+    background-color: rgb(238, 234, 234);
+    font-family:Georgia, 'Times New Roman', Times, serif ;
+    width: 20%;
+    margin: auto;
+    padding-bottom: 15px;
+    height: 100%;
+}
+
+.form input{
+    max-width: 80%;
+    height: 25px;
+    border-radius: 5px;
+    border-color: green;
+}
+
+.form div {
+    margin: 10px 5px;
+    
+}
+
+.text_box{
+    border: 1px black solid;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: aliceblue;
+    font-weight: 800;
+    width: 50%;
+    margin: 10px auto;
+}
+.confirm{
+    background-color: aqua;
+    color: rgb(44, 5, 5);
+    height: 100%;
+    width: 50%;
+    padding: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    
+}
+.confirm:hover{
+    background-color: rgb(93, 161, 163);
+}
+
+.error{
+    display: none;
+}
+
+#checkbox{
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+}
+
+#checkbox i{
+    color: black;
+}
+
+
+
+#checkbox1, #checkbox2{
+    color: aqua;
+}
+
+.inputValue{
+    width: 100%;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+  }
+  
