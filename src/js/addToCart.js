@@ -1,47 +1,44 @@
-import React, { useState } from 'react';
-
-function Cart() {
-  const [productsInCart, setProductsInCart] = useState([]);
-  
-  const addToCart = (id, productInCart, products) => {
-    // Tìm kiếm xem sản phẩm đã có trong giỏ hàng chưa
-    const checkProduct = productsInCart.some(value => value.id === id);
+import products from './products';
+import Swal from 'sweetalert2';
+export default function addToCart(id) {
+    let productInCart = localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [];
+    let checkProduct = productInCart.some(product => product.id === id);
 
     if (!checkProduct) {
-      // Nếu sản phẩm chưa có trong giỏ hàng
-      const product = products.find(value => value.id === id);
-      if (product) {
-        // Thêm sản phẩm vào giỏ hàng
-        setProductsInCart(prevProducts => [
-          ...prevProducts,
-          {
+        let product = products.find(product => product.id === id);
+        productInCart.unshift({
             ...product,
             quantity: 1
-          }
-        ]);
-        localStorage.setItem('products', JSON.stringify(productsInCart));
-      }
+        });
+        localStorage.setItem('products', JSON.stringify(productInCart));
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Thêm vào giỏ hàng thành công",
+            showConfirmButton: false,
+            timer: 1000
+          });
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
     } else {
-      // Nếu sản phẩm đã có trong giỏ hàng
-      const updatedProducts = productsInCart.map(product => {
-        if (product.id === id) {
-          return {
+        let getIndex = productInCart.findIndex(product => product.id === id);
+        let product = productInCart.find(product => product.id === id);
+        productInCart[getIndex] = {
             ...product,
-            quantity: product.quantity + 1
-          };
-        }
-        return product;
-      });
-      setProductsInCart(updatedProducts);
-      localStorage.setItem('products', JSON.stringify(updatedProducts));
+            quantity: ++product.quantity
+        };
+        localStorage.setItem('products', JSON.stringify(productInCart));
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Thêm vào giỏ hàng thành công",
+            showConfirmButton: false,
+            timer: 1000
+          });
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
     }
-    //productTotal(); 
-  };
-
-
-  return (
-    <></>
-  );
 }
 
-export default Cart;

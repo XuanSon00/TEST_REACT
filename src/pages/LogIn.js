@@ -6,15 +6,14 @@ import { useState, useEffect } from "react";
 import { db } from "../js/firebase";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 
 export default function LogIn() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [data, setData] = useState([]);
     const navigate = useNavigate(); //điều hướng đến các trang khác
-    const [error, setError] = useState('');
-
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         const q = query(collection(db, "Register"));
@@ -31,81 +30,81 @@ export default function LogIn() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        let error = '';
+        const newErrors = [];
 
-        if (username === '') {
-            error = 'Vui lòng nhập Tên người dùng.';
-          } else if (password === '') {
-            error = 'Vui lòng nhập Mật khẩu.';
-          }
-
-
-        // Tìm người dùng trong mảng 'data' dựa trên tên người dùng và mật khẩu 
-        /*const userData = data.find(item => item.username === username && item.password === password);
-        if (userData) {
-          navigate("/homepage", { state: { userData } });// Điều hướng đến trang "../data/HomePage" và truyền dữ liệu người dùng dưới dạng 'state'
-        } else{
-            setError('Tên người dùng hoặc mật khẩu không chính xác.');
-        }*/
-        if (error === '') {
-            if (data.length > 0) {
-                const userData = data.find((item) => item.username === username && item.password === password);
-                if (userData) {
-                    navigate('/homepage', { state: { userData } });
-                } else {
-                    error = 'Tên người dùng hoặc mật khẩu không chính xác.';
-                }
-            } else {
-                error = 'Dữ liệu người dùng chưa được tải, vui lòng thử lại sau.';
-            }
+        if (username === "") {
+            newErrors.push("Vui lòng nhập Tên người dùng.");
+        }
+        if (password === '') {
+            newErrors.push("Vui lòng nhập mật khẩu.");
         }
 
-        setError(error);
-        
-      };
+        if (newErrors.length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        const userData = data.find((item) => item.username === username);
+        if (!userData || userData.password !== password) {
+            setErrors(['Tên người dùng hoặc mật khẩu không chính xác.']);
+            return;
+        }
+        Swal.fire({
+            icon: 'success',
+            title: 'Đăng nhập thành công!',
+            showConfirmButton: false,
+            timer: 1500
+        }).then(() => {
+            navigate('/homepage', { state: { userData } });
+        });
+    
+    };
+
 
     return(
         <>
             <Header />
-<section>
-    <div className="form">
-        <h2>Đăng nhập</h2>
-        <hr/>
-            <div className="user">
-            <span>Tên người dùng:</span>
-            <br />
-            <input type="text" 
-                className="textbox" 
-                id="userLogin" 
-                placeholder="nhập tên đăng nhập" 
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
+            <section>
+                <div className="form">
+                    <h2>Đăng nhập</h2>
+                    <hr/>
+                    <div className="user">
+                        <span>Tên người dùng:</span>
+                        <br />
+                        <input type="text" 
+                            className="textbox" 
+                            id="userLogin" 
+                            placeholder="nhập tên đăng nhập" 
+                            name="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className="password">
+                        <span>Mật khẩu:</span>
+                        <br />
+                        <input type="password" 
+                            className="textbox" 
+                            id="passwordLogin" 
+                            placeholder="Nhập mật khẩu" 
+                            name='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <br />
+                    <button id="button" className="text_box" onClick={handleLogin}>Đăng nhập</button>
+                    {errors.map((error, index) => (
+                        <p key={index} className="error-message">{error}</p>
+                    ))}
+                    <Link to="/register">
+                        <small>Chưa có tài khoản</small>
+                    </Link>
+                </div>
+            </section>
+            <div className="footer">
+                <Footer />
             </div>
-            <div className="password">
-            <span>Mật khẩu:</span>
-            <br />
-            <input type="password" 
-                className="textbox" 
-                d="passwordLogin" 
-                placeholder="Nhập mật khẩu" 
-                name='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <br />
-            {error && <p className="error">{error}</p>}
-            <button id="button" className="text_box" onClick={handleLogin}>Đăng nhập</button>
-            <Link to="/register">
-                <small>Chưa có tài khoản</small>
-            </Link>
-    </div>
-</section>
-<div className="footer">
-        <Footer />
-</div>
         </>
     )
 }

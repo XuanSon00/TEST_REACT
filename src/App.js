@@ -11,7 +11,8 @@ import Samsung from './data/samsung';
 import Footer from './components/footer';
 import Phone from './data/phone';
 import Tablet from './data/tablet';
-import Detail from './data/detail';
+import Cart from './data/cart';
+//import Detail from './data/detail';
 export default function App() {
   return (
     <div >
@@ -25,7 +26,8 @@ export default function App() {
           <Route path='/samsung' element={<Samsung />} />
           <Route path='/tablet' element={<Tablet />} />
           <Route path='/phone' element={<Phone />} />
-          <Route path='/detail' element={<Detail />} />
+          <Route path='/cart' element={<Cart />} />
+          {/*<Route path='/detail' element={<Detail />} />*/}
           <Route path="/footer" element={<Footer />} />
         </Routes>
 

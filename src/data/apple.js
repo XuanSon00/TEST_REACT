@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import HeaderData from "../components/HeaderData";
 import Footer from "../components/footer";
 import products from '../js/products';
-import Cart from '../js/addToCart';
+import addToCart from '../js/addToCart';
 import '../css/product.css';
 
 export default function Apple() {
@@ -14,15 +14,22 @@ export default function Apple() {
     const productItems = appleProducts.map(product => (
         <div className="product-item" style={{ cursor: 'pointer' }}>
             <img src={product.img} alt={product.name} />
+
             <div className="product-item-text">
                 <h1>{product.name}</h1>
                 <p><span>{product.price}</span><sup>đ</sup></p>
             </div>
-            <button className="btn btn-secondary btn-modal" onClick={toggleModal}>Chi tiết</button>
-            <button onClick={(e) => { Cart(product.id); e.stopPropagation(); }} className="btn btn-primary">Thêm vào giỏ hàng</button>
+            <button className="btn btn-secondary btn-modal" onClick={() => handleProductClick(product.id)}>Chi tiết</button>
+            <button onClick={() => addToCart(product.id)} className="btn btn-primary">Thêm vào giỏ hàng</button>
         </div>
     ));
-
+    const [selectProduct, setSeclectProduct] = useState(null);
+    const handleProductClick = (productId) =>{
+        const product = appleProducts.find(item => item.id === productId);
+        setSeclectProduct(product);
+        toggleModal();
+    }
+    
     return (
         <>
             <HeaderData />
@@ -54,26 +61,26 @@ export default function Apple() {
                     </div>
                 </div>
                 
-                {modal && (
-                  <div className="product-details modal">
+                {modal && selectProduct &&(
+                  <div className="product-details modal" style={modal ? {display:'block'} : ''}>
                     <div className='overlay'>
-                      <div className='modal-content'>
-                        <h2>Chi tiết sản phẩm</h2>
-                        <p>Tên: {products.name}</p>
-                        <img src={products.img} alt={products.name} />
-                        <p>Giá: {products.price}đ</p>
-                        <p>Screen: {products.Screen}</p>
-                        <p>OS: {products.OS}</p>
-                        <p>Rear Camera: {products.RearCamera}</p>
-                        <p>Front Camera: {products.FrontCamera}</p>
-                        <p>Chip: {products.Chip}</p>
-                        <p>RAM: {products.RAM}</p>
-                        <p>Storage Capacity: {products.StorageCapacity}</p>
-                        <p>SIM: {products.SIM}</p>
-                        <p>Battery & Phone Charger: {products.BatterPhoneCharger}</p>
-                        <div>
-                          <button className='close-modal' onClick={toggleModal}>Đóng</button>
-                        </div>
+                        <div className='modal-content' style={{ backgroundColor: '#dddd', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <h2>Chi tiết sản phẩm</h2>
+                            <p>Tên: {selectProduct.name}</p>
+                            <img src={selectProduct.img} alt={selectProduct.name} style={{ width: '120px' }} />
+                            <p>Giá: {selectProduct.price}đ</p>
+                            <p>Screen: {selectProduct.Screen}</p>
+                            <p>OS: {selectProduct.OS}</p>
+                            <p>Rear Camera: {selectProduct.RearCamera}</p>
+                            <p>Front Camera: {selectProduct.FrontCamera}</p>
+                            <p>Chip: {selectProduct.Chip}</p>
+                            <p>RAM: {selectProduct.RAM}</p>
+                            <p>Storage Capacity: {selectProduct.StorageCapacity}</p>
+                            <p>SIM: {selectProduct.SIM}</p>
+                            <p>Battery & Phone Charger: {selectProduct.BatterPhoneCharger}</p>
+                                <div> 
+                                    <button className='close-modal' onClick={toggleModal}>Đóng</button>
+                                </div>
                       </div>
                     </div>
                   </div>

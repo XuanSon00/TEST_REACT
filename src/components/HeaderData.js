@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom"
 import { Dropdown } from 'react-bootstrap';
+import ProductTotal from "../js/productTotal";
 import '../css/header.css';
+
 export default function HeaderData() {
 
     return(
@@ -35,7 +37,7 @@ export default function HeaderData() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item href="/phone" >Điện thoại</Dropdown.Item >
-                  <Dropdown.Item href="/tablet" >Tablet</Dropdown.Item>
+                  <Dropdown.Item href="/tablet" >Máy tính bảng</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
@@ -50,20 +52,15 @@ export default function HeaderData() {
                   <Dropdown.Item href="/samsung" >Samsung</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </li>
-
-            <Link to="/" className="nav-link active text-white" aria-current="page">
-                Hóa đơn
-            </Link>
-            
+            </li>        
           </ul>
         <form className="d-flex">
-            <div className="nav-item">
-                <Link to="/">Đăng Xuất</Link>
-            </div>
+          <Link to="/" className="nav-link active text-white" style={{ fontSize: '20px', marginRight: '10px' }}>
+            Đăng xuất
+          </Link>
             <Link className="nav-link text-white condition" to="/cart">
                 <i style={{ fontSize: '50px' }} className="bx bx-cart-alt"></i>
-                <sub style={{ fontSize: 'medium', color: '#e5330b' }} id="total"></sub>
+                <sub style={{ fontSize: 'medium', color: '#e5330b' }} id="total">{ProductTotal()}</sub>
             </Link>
         </form>
         </div>

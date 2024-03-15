@@ -36,7 +36,7 @@ export default function Header() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item href="#" onClick={PopUp}>Điện thoại</Dropdown.Item >
-                  <Dropdown.Item href="#" onClick={PopUp}>Tablet</Dropdown.Item>
+                  <Dropdown.Item href="#" onClick={PopUp}>Máy tính bảng</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
@@ -52,11 +52,6 @@ export default function Header() {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-
-            <Link to="../data/homepage" className="nav-link active text-white" aria-current="page" onClick={PopUp}>
-                Hóa đơn
-            </Link>
-            
           </ul>
           <form className="d-flex">
             <Link to="/Register" className="nav-link active text-white signIn" aria-current="page">
